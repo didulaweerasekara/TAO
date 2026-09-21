@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact — TAO</title>
+  <meta name="description" content="Get in touch with TAO to enquire about workshops, programmes and partnerships.">
+  <meta name="theme-color" content="#0b0b0c">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Contact — TAO">
+  <meta property="og:description" content="Enquire about workshops, programmes and partnerships.">
+  <meta property="og:image" content="assets/img/og-image.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script>document.documentElement.classList.add("js")</script>
+</head>
+<body data-page="contact" class="theme-dark" id="top">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-header"></div>
+
+<main id="main">
+
+  <section class="page-hero theme-dark">
+    <div class="container">
+      <span class="eyebrow reveal">Contact</span>
+      <h1 class="reveal" style="--d:.08s">Let’s start a <em>conversation.</em></h1>
+      <p class="lede reveal" style="--d:.16s">Tell us about you or your team and we will reply within two working days.</p>
+    </div>
+  </section>
+
+  <section class="section theme-light">
+    <div class="container">
+      <div class="contact-grid">
+
+        <!-- Details are filled in from assets/js/config.js -->
+        <div class="reveal">
+          <span class="eyebrow">Contact details</span>
+          <dl class="details" style="margin-top:28px">
+            <div><dt>Email</dt><dd><a data-tao="email" href="#">hello@your-domain.com</a></dd></div>
+            <div><dt>Phone</dt><dd><a data-tao="phone" href="#">+00 000 000 0000</a></dd></div>
+            <div><dt>Address</dt><dd><address data-tao="address">Street address<br>City, Country</address></dd></div>
+            <div><dt>Hours</dt><dd data-tao="hours">Monday – Friday, 9:00 – 18:00</dd></div>
+            <div data-tao-wrap><dt>Follow</dt><dd><div class="social" data-tao="social"></div></dd></div>
+          </dl>
+        </div>
+
+        <form class="form reveal" id="enquiry-form" style="--d:.1s">
+          <h2 id="enquiry">Enquire about a <em>workshop</em></h2>
+
+          <div class="form-row form-row--2">
+            <div class="field"><label for="f-name">Full name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
+            <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+          </div>
+          <div class="form-row form-row--2">
+            <div class="field"><label for="f-org">Organisation <span style="text-transform:none;letter-spacing:0">(optional)</span></label><input id="f-org" name="organisation" type="text" autocomplete="organization"></div>
+            <div class="field"><label for="f-topic">I’m interested in</label>
+              <select id="f-topic" name="topic">
+                <option>General enquiry</option>
+                <option>Communication &amp; Presence</option>
+                <option>Leadership &amp; Influence</option>
+                <option>Emotional Intelligence</option>
+                <option>Collaboration &amp; Teamwork</option>
+                <option>Negotiation &amp; Conflict</option>
+                <option>Cross-Cultural Fluency</option>
+                <option>Collaborating with TAO</option>
+              </select>
+            </div>
+          </div>
+          <div class="field"><label for="f-msg">Message</label><textarea id="f-msg" name="message" required></textarea></div>
+
+          <div class="hp" aria-hidden="true"><label>Leave this empty <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
+
+          <div class="form-status" role="status" aria-live="polite" hidden></div>
+          <div class="btn-row" style="align-items:center; gap:24px">
+            <button class="btn btn--dark" type="submit">Send message <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></button>
+            <span class="form-note">We never share your details.</span>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div id="site-footer"></div>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/site.js" data-root="" defer></script>
+</body>
+</html>
