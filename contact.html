@@ -1,87 +1,101 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-GB">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Contact — TAO</title>
-  <meta name="description" content="Get in touch with TAO to enquire about workshops, programmes and partnerships.">
-  <meta name="theme-color" content="#0b0b0c">
+  <title>Contact TAO — Enquiries for Individuals &amp; Organisations</title>
+  <meta name="description" content="Enquire about a TAO programme, a workshop place, an organisational programme, a speaking or training request, or a partnership.">
+  <link rel="canonical" href="https://didulaweerasekara.github.io/TAO/contact.html">
+  <meta name="theme-color" content="#0e1526">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Contact — TAO">
-  <meta property="og:description" content="Enquire about workshops, programmes and partnerships.">
-  <meta property="og:image" content="assets/img/og-image.png">
+  <meta property="og:site_name" content="TAO — Thrive in Life &amp; Career">
+  <meta property="og:title" content="Contact TAO">
+  <meta property="og:description" content="Start with a conversation.">
+  <meta property="og:url" content="https://didulaweerasekara.github.io/TAO/contact.html">
+  <meta property="og:image" content="https://didulaweerasekara.github.io/TAO/assets/img/photos/og-image-1200.jpg">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/styles.css">
   <script>document.documentElement.classList.add("js")</script>
 </head>
-<body data-page="contact" class="theme-dark" id="top">
+<body data-page="contact" id="top">
 <a class="skip-link" href="#main">Skip to content</a>
 <div id="site-header"></div>
 
 <main id="main">
 
-  <section class="page-hero theme-dark">
+  <section class="page-hero theme-dark" aria-labelledby="page-title">
+    <svg class="converge draw" viewBox="0 0 600 400" preserveAspectRatio="xMaxYMid meet" aria-hidden="true" focusable="false"><path pathLength="1" d="M0 30 C 200 30 250 200 380 200"/><path pathLength="1" d="M0 370 C 200 370 250 200 380 200"/><path pathLength="1" d="M380 200 H 600"/><circle class="c-dot" cx="380" cy="200" r="3.5"/></svg>
     <div class="container">
-      <span class="eyebrow reveal">Contact</span>
-      <h1 class="reveal" style="--d:.08s">Let’s start a <em>conversation.</em></h1>
-      <p class="lede reveal" style="--d:.16s">Tell us about you or your team and we will reply within two working days.</p>
+      <div class="page-hero__inner">
+        <div>
+          <p class="eyebrow reveal">Contact</p>
+          <h1 id="page-title" class="reveal" style="--d:.08s">Start with a <em>conversation.</em></h1>
+        </div>
+        <p class="lede reveal" style="--d:.16s">Whether you are looking for a workshop place, a programme for your team, a speaker or a partner, tell us a little about it. Every enquiry is read and answered personally.</p>
+      </div>
     </div>
   </section>
 
-  <section class="section theme-light">
-    <div class="container">
-      <div class="contact-grid">
-
-        <!-- Details are filled in from assets/js/config.js -->
-        <div class="reveal">
-          <span class="eyebrow">Contact details</span>
-          <dl class="details" style="margin-top:28px">
-            <div><dt>Email</dt><dd><a data-tao="email" href="#">hello@your-domain.com</a></dd></div>
-            <div><dt>Phone</dt><dd><a data-tao="phone" href="#">+00 000 000 0000</a></dd></div>
-            <div><dt>Address</dt><dd><address data-tao="address">Street address<br>City, Country</address></dd></div>
-            <div><dt>Hours</dt><dd data-tao="hours">Monday – Friday, 9:00 – 18:00</dd></div>
-            <div data-tao-wrap><dt>Follow</dt><dd><div class="social" data-tao="social"></div></dd></div>
-          </dl>
+  <section class="section theme-light" id="enquiry" aria-labelledby="form-title">
+    <div class="container contact-grid">
+      <form id="enquiry-form" class="form">
+        <h2 id="form-title" class="sr-only">Enquiry form</h2>
+        <fieldset class="field">
+          <legend>What is your enquiry about?</legend>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="enquiry_type" value="individual" checked><span>Individual development</span></label>
+            <label class="choice"><input type="radio" name="enquiry_type" value="workshop"><span>A workshop place</span></label>
+            <label class="choice"><input type="radio" name="enquiry_type" value="organisation"><span>My organisation or team</span></label>
+            <label class="choice"><input type="radio" name="enquiry_type" value="speaking"><span>Speaking or training request</span></label>
+            <label class="choice"><input type="radio" name="enquiry_type" value="partnership"><span>Partnership</span></label>
+          </div>
+        </fieldset>
+        <div class="form__row">
+          <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
+          <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
         </div>
+        <div class="form__row">
+          <div class="field"><label for="f-org">Organisation <span class="opt">(optional)</span></label><input id="f-org" name="organisation" type="text" autocomplete="organization"></div>
+          <div class="field"><label for="f-role">Role <span class="opt">(optional)</span></label><input id="f-role" name="role" type="text" autocomplete="organization-title"></div>
+        </div>
+        <div class="field">
+          <label for="f-topic">What are you interested in?</label>
+          <select id="f-topic" name="topic" data-render="topic-options"><option value="">Choose an option</option></select>
+        </div>
+        <div class="field">
+          <label for="f-msg">Message</label>
+          <textarea id="f-msg" name="message" required aria-describedby="f-msg-hint"></textarea>
+          <small id="f-msg-hint" class="muted" style="font-size:.8125rem">A few lines is enough: the situation, who is involved and what you would like to be different.</small>
+        </div>
+        <div class="hp" aria-hidden="true"><label for="f-gotcha">Leave this field empty</label><input id="f-gotcha" type="text" name="_gotcha" tabindex="-1" autocomplete="off"></div>
+        <div class="btn-row"><button class="btn btn--ink" type="submit">Send enquiry <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></button></div>
+        <p class="muted" style="font-size:.8125rem">We use your details only to reply to your enquiry. See our <a href="privacy.html">Privacy Policy</a>.</p>
+        <p class="form-status" role="status" aria-live="polite" hidden></p>
+      </form>
 
-        <form class="form reveal" id="enquiry-form" style="--d:.1s">
-          <h2 id="enquiry">Enquire about a <em>workshop</em></h2>
-
-          <div class="form-row form-row--2">
-            <div class="field"><label for="f-name">Full name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
-            <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
-          </div>
-          <div class="form-row form-row--2">
-            <div class="field"><label for="f-org">Organisation <span style="text-transform:none;letter-spacing:0">(optional)</span></label><input id="f-org" name="organisation" type="text" autocomplete="organization"></div>
-            <div class="field"><label for="f-topic">I’m interested in</label>
-              <select id="f-topic" name="topic">
-                <option>General enquiry</option>
-                <option>Communication &amp; Presence</option>
-                <option>Leadership &amp; Influence</option>
-                <option>Emotional Intelligence</option>
-                <option>Collaboration &amp; Teamwork</option>
-                <option>Negotiation &amp; Conflict</option>
-                <option>Cross-Cultural Fluency</option>
-                <option>Collaborating with TAO</option>
-              </select>
-            </div>
-          </div>
-          <div class="field"><label for="f-msg">Message</label><textarea id="f-msg" name="message" required></textarea></div>
-
-          <div class="hp" aria-hidden="true"><label>Leave this empty <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
-
-          <div class="form-status" role="status" aria-live="polite" hidden></div>
-          <div class="btn-row" style="align-items:center; gap:24px">
-            <button class="btn btn--dark" type="submit">Send message <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></button>
-            <span class="form-note">We never share your details.</span>
-          </div>
-        </form>
-
-      </div>
+      <aside class="contact-aside" aria-label="About your enquiry">
+        <div>
+          <h3>What happens next</h3>
+          <ol>
+            <li>We read your enquiry and reply to you personally.</li>
+            <li>If helpful, we arrange a short call to understand the situation.</li>
+            <li>We recommend a programme, a workshop date or a tailored proposal.</li>
+          </ol>
+        </div>
+        <div data-contact-wrap>
+          <h3>Other ways to reach us</h3>
+          <ul class="stack" data-contact></ul>
+        </div>
+        <div>
+          <h3>For organisations</h3>
+          <p class="muted">Tell us what your team is working through. <a href="organisations.html">See how we work with organisations</a>.</p>
+        </div>
+      </aside>
     </div>
   </section>
 
@@ -89,6 +103,7 @@
 
 <div id="site-footer"></div>
 <script src="assets/js/config.js"></script>
+<script src="assets/js/content.js"></script>
 <script src="assets/js/site.js" data-root="" defer></script>
 </body>
 </html>
