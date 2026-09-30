@@ -1,5 +1,5 @@
 /* ==========================================================================
-   TAO — site settings
+   TAO: site settings
    Contact details, social links and the enquiry form. The header, footer,
    Contact page and every form on the site read from this file.
 
@@ -12,10 +12,10 @@ window.TAO = {
   siteUrl: "https://didulaweerasekara.github.io/TAO/",
 
   // ---- Contact details -----------------------------------------------------
-  email: "",        // e.g. "hello@example.org" — shown in footer and Contact page
+  email: "",        // e.g. "hello@example.org": shown in footer and Contact page
   phone: "",        // e.g. "+94 77 123 4567"
   whatsapp: "",     // full international number, digits only, e.g. "94771234567"
-  location: "",     // e.g. "Colombo, Sri Lanka" — optional
+  location: "",     // e.g. "Colombo, Sri Lanka": optional
 
   // ---- Social links (leave "" to hide) -------------------------------------
   social: {
