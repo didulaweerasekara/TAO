@@ -1,31 +1,35 @@
 /* ==========================================================================
    TAO — site settings
-   This is the ONLY file you need to edit for contact details, social links
-   and the enquiry form. Everything in the header, footer and Contact page
-   updates automatically.
+   Contact details, social links and the enquiry form. The header, footer,
+   Contact page and every form on the site read from this file.
+
+   Only publish details that are real and monitored. Anything left as ""
+   is simply not shown on the live site.
    ========================================================================== */
 window.TAO = {
   name: "TAO",
   tagline: "Thrive in Life & Career",
+  siteUrl: "https://didulaweerasekara.github.io/TAO/",
 
-  // ---- Contact details (replace the placeholders) -------------------------
-  email: "hello@your-domain.com",
-  phone: "+00 000 000 0000",
-  address: ["Street address", "City, Country"],
-  hours: "Monday – Friday, 9:00 – 18:00",
+  // ---- Contact details -----------------------------------------------------
+  email: "",        // e.g. "hello@example.org" — shown in footer and Contact page
+  phone: "",        // e.g. "+94 77 123 4567"
+  whatsapp: "",     // full international number, digits only, e.g. "94771234567"
+  location: "",     // e.g. "Colombo, Sri Lanka" — optional
 
-  // ---- Social links (leave "" to hide an icon) ----------------------------
+  // ---- Social links (leave "" to hide) -------------------------------------
   social: {
-    linkedin: "",   // e.g. "https://www.linkedin.com/company/your-page"
+    linkedin: "",
     instagram: "",
-    youtube: "",
-    x: ""
+    facebook: "",
+    youtube: ""
   },
 
-  // ---- Enquiry form --------------------------------------------------------
-  // GitHub Pages can't process forms by itself. Create a free form at
-  // https://formspree.io, then paste its URL here, e.g.
-  //   "https://formspree.io/f/abcdwxyz"
-  // Leave "" and the form will open the visitor's email app instead.
+  // ---- Forms ---------------------------------------------------------------
+  // GitHub Pages cannot receive form submissions on its own. Create a free
+  // form at https://formspree.io and paste its endpoint here, e.g.
+  //   formEndpoint: "https://formspree.io/f/abcdwxyz"
+  // Enquiries and newsletter sign-ups are both sent to this endpoint.
+  // If it is empty but `email` is set, forms open the visitor's email app.
   formEndpoint: ""
 };

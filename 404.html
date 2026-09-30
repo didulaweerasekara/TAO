@@ -1,25 +1,38 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-GB">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Page not found — TAO</title>
   <meta name="robots" content="noindex">
-  <meta name="theme-color" content="#0b0b0c">
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <meta name="theme-color" content="#0e1526">
+  <!-- GitHub Pages serves this page from any missing path, so it uses absolute
+       /TAO/ paths. If the site moves to a custom domain, change "/TAO/" to "/". -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/TAO/assets/img/favicon-32.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-  <!-- 404 can be served from any path, so this page uses site-root URLs. See README if your site lives at username.github.io/repo-name/ -->
-  <link rel="stylesheet" href="/assets/css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/TAO/assets/css/styles.css">
+  <script>document.documentElement.classList.add("js")</script>
 </head>
-<body class="theme-dark" id="top">
-<main class="notfound">
-  <div class="container">
-    <h1>404</h1>
-    <p class="lede">This page could not be found. It may have moved, or the address may be mistyped.</p>
-    <a class="btn btn--brass" href="/">Return home</a>
+<body data-page="404" id="top" class="theme-dark">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-header"></div>
+<main id="main" class="notfound theme-dark">
+  <div class="container stack-lg">
+    <p class="display" aria-hidden="true">404</p>
+    <h1 style="font-size:clamp(2rem,4vw,3rem)">This page has <em>moved on.</em></h1>
+    <p class="lede">The address may be mistyped, or the page may have been renamed. These are good places to continue:</p>
+    <div class="btn-row">
+      <a class="btn btn--primary" href="/TAO/">Return home</a>
+      <a class="btn btn--ghost" href="/TAO/programmes.html">Explore Programmes</a>
+      <a class="btn btn--ghost" href="/TAO/contact.html">Contact</a>
+    </div>
   </div>
 </main>
+<div id="site-footer"></div>
+<script src="/TAO/assets/js/config.js"></script>
+<script src="/TAO/assets/js/content.js"></script>
+<script src="/TAO/assets/js/site.js" data-root="/TAO/" defer></script>
 </body>
 </html>

@@ -1,76 +1,72 @@
-# TAO website
+# TAO — Thrive in Life & Career
 
-A fast, dependency-free static website for **TAO — Thrive in Life & Career**.
-Plain HTML, CSS and JavaScript: no build step, no framework, free to host on GitHub Pages.
+The website of **TAO**, a professional development institution for communication, leadership, negotiation and influence.
+
+Plain HTML, CSS and JavaScript. No framework, no build step — it deploys to GitHub Pages as it is.
+
+Live address: <https://didulaweerasekara.github.io/TAO/>
 
 ## Pages
 
 | File | Purpose |
 | --- | --- |
 | `index.html` | Home |
-| `about.html` | About |
-| `team.html` | Team profiles (click "View profile" for a full pop-up bio) |
-| `testimonials.html` | Testimonials |
-| `blog.html` + `blog/*.html` | Blog index and articles |
-| `contact.html` | Contact details and enquiry form |
-| `404.html` | Not-found page |
+| `about.html` | Why TAO exists, the name, philosophy and approach |
+| `programmes.html` | Full programme catalogue (individuals and organisations) |
+| `events.html` | Upcoming and recent workshops |
+| `facilitators.html` | Facilitator profiles |
+| `organisations.html` | For Organisations |
+| `insights.html` + `insights/*.html` | Evergreen articles |
+| `newsletter.html` | TAO Newsletter: current issue, archive, subscribe |
+| `contact.html` | Enquiry form |
+| `privacy.html`, `terms.html` | Legal |
+| `404.html` | Not-found page (uses absolute `/TAO/` paths) |
 
-## First things to change
+`team.html`, `blog.html`, `testimonials.html` and `blog/*.html` are redirects from the old template addresses.
 
-1. **Contact details, social links, form** → edit `assets/js/config.js`. The header, footer and Contact page all update from that one file.
-2. **All sample content** (team names, testimonials, blog posts, About story) is placeholder text written to show the design. Replace it before going live. Search for `SAMPLE` in the HTML files to find each block.
-3. **Accent colour** → change `--brass` (and `--brass-deep`) at the top of `assets/css/styles.css`.
+## Where to edit things
 
-## Adding your images
+| To change… | Edit |
+| --- | --- |
+| Email, phone, WhatsApp, location, social links, form endpoint | `assets/js/config.js` |
+| Facilitators, programmes, events, newsletter issues, insights list, testimonials, photographs | `assets/js/content.js` |
+| Navigation and footer | `assets/js/site.js` (the `NAV` list and footer block) |
+| Colours and typography | top of `assets/css/styles.css` (`:root`) |
+| Page wording | the page's `.html` file |
 
-Drop files into these folders. Until an image exists, a branded placeholder is shown automatically — nothing breaks.
+`content.js` has instructions at the top. The short version:
 
-| Folder / file | What | Suggested size |
-| --- | --- | --- |
-| `assets/img/team/member-1.jpg` … `member-4.jpg` | Team portraits (4:5) | 800 × 1000 px |
-| `assets/img/blog/<article-name>.jpg` | Blog covers, same name as the article page | 1600 × 1000 px |
-| `assets/img/testimonials/client-1.jpg` … | Optional client headshots (square) | 200 × 200 px |
-| `assets/img/about-workshop.jpg` | Photo on the About page | 1400 × 1120 px |
+- **Add a programme:** copy an object in `programmes`, give it a unique `id`. It appears in the catalogue, the contact form dropdown and on facilitator profiles automatically. `featured: true` puts it on the home page.
+- **Add an event:** copy the commented example in `events` and set `status: "upcoming"`. When it has happened, change it to `"past"`, and it moves to *Recent workshops*.
+- **Add a newsletter issue:** add a new object at the **top** of `newsletter`. The first issue is the current issue; older ones stay in the archive. Empty sections are hidden.
+- **Add an insight:** copy an article in `insights/`, rename it, edit it, then add a matching entry at the top of `insights` in `content.js`.
+- **Add a testimonial:** add `{ quote, name, role, programme }` to `testimonials`. The section is hidden until at least one exists. Publish only verified feedback, with permission.
+- **Add a facilitator:** add an object to `facilitators` and portraits to `assets/img/photos/`.
 
-Team and blog photos are shown in greyscale and turn to colour on hover, so photos from different sources look consistent. To keep them in colour, remove `grayscale(1) contrast(1.05)` from the `.photo img, .media--tone img` rule in `styles.css`.
+## Photographs
 
-The logo files in `assets/img/` were generated from your original `Logo.png`:
-`logo-white.png` / `logo-black.png` (full lockup), `mark-white.png` / `mark-black.png` (TAO only), favicons and `og-image.png` (social sharing card).
+Processed photos live in `assets/img/photos/` as `<name>-<width>.jpg` (two widths each, for responsive loading). The registry at the top of `content.js` maps each photo to its files, size and alt text. To replace a photo, save new files with the same names, or add new ones and update the registry.
 
-## Adding a team member
+Portraits are cropped 4:5; landscape photos are 4:3. Keep faces in the upper-middle of a portrait crop.
 
-Open `team.html`, copy one `<article class="member …">` block, give it a new `id` (e.g. `member-5`) and edit the text. Save the portrait as `assets/img/team/member-5.jpg`.
+## Making the forms work
 
-## Adding a blog post
+GitHub Pages cannot receive form submissions itself. Enquiries and newsletter sign-ups both use `formEndpoint` in `config.js`:
 
-1. Copy `blog/executive-presence.html` to `blog/your-post-name.html` and edit the title, date, category and text.
-2. Add a matching `<a class="post-card …">` block in `blog.html` (and, optionally, `index.html`).
-3. Cover image: `assets/img/blog/your-post-name.jpg`.
+1. Create a free form at [formspree.io](https://formspree.io) and copy its endpoint (e.g. `https://formspree.io/f/abcdwxyz`).
+2. Paste it into `formEndpoint`.
 
-## Making the contact form work
+If `formEndpoint` is empty but `email` is set, forms open the visitor's email app instead. **Until one of the two is set, forms cannot deliver messages** — set this before sharing the site widely.
 
-GitHub Pages cannot receive form submissions itself. Two options:
+## Publishing
 
-- **Free form service (recommended):** create a form at [formspree.io](https://formspree.io), copy its endpoint URL (looks like `https://formspree.io/f/abcdwxyz`) and paste it into `formEndpoint` in `assets/js/config.js`.
-- **Nothing to set up:** leave `formEndpoint` empty and the form opens the visitor's email app with the message pre-filled.
+The site is served by GitHub Pages from the `main` branch root. Push to `main` and it updates within a minute or two.
 
-## Publishing on GitHub Pages
-
-1. Create a GitHub repository and upload everything in this folder (drag-and-drop on github.com works, or use git).
-2. In the repository: **Settings → Pages → Build and deployment → Source: Deploy from a branch**, choose `main` and `/ (root)`, then Save.
-3. After a minute the site is live at `https://<username>.github.io/<repository>/`.
-   (Name the repository `<username>.github.io` to publish at the root address instead.)
-
-**Custom domain:** in Settings → Pages, enter your domain and follow GitHub's DNS instructions.
-
-### Notes for after you have a real web address
-
-- `404.html` uses root-relative paths (`/assets/...`). It works on a custom domain or a `<username>.github.io` repository. If the site lives at `<username>.github.io/<repository>/`, change `/assets/` to `/<repository>/assets/` and `href="/"` to `href="/<repository>/"` in that file.
-- Social-sharing previews (`og:image`) work best with an absolute URL. Once you know your address, change `content="assets/img/og-image.png"` to e.g. `content="https://yourdomain.com/assets/img/og-image.png"` in each page's `<head>`.
+If you move to a custom domain, update `siteUrl` in `config.js`, the `canonical`/`og:` URLs in each page's `<head>`, and the `/TAO/` paths in `404.html`.
 
 ## Previewing locally
 
-Open `index.html` in a browser, or for the most accurate result run a tiny server in this folder:
+Open `index.html` in a browser, or run a small server in this folder:
 
 ```
 python -m http.server 8000
