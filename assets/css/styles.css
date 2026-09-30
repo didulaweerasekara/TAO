@@ -1,14 +1,14 @@
 /* ==========================================================================
-   TAO — Thrive in Life & Career
+   TAO: Thrive in Life & Career
    Design system and components. Plain CSS, no build step.
    Brand colours and type live in :root.
    ========================================================================== */
 
 :root {
-  --ink: #0e1526;          /* deep ink navy — primary dark ground */
+  --ink: #0e1526;          /* deep ink navy: primary dark ground */
   --ink-2: #141c31;
   --ink-3: #1c2640;
-  --paper: #f6f3ed;        /* warm paper — primary light ground */
+  --paper: #f6f3ed;        /* warm paper: primary light ground */
   --paper-2: #ede8de;
   --stone: #d8d0c1;
   --white: #ffffff;

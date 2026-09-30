@@ -1,5 +1,5 @@
 /* ==========================================================================
-   TAO — shared behaviour: header, footer, content rendering, forms, motion.
+   TAO: shared behaviour: header, footer, content rendering, forms, motion.
    No dependencies, no build step. Content comes from content.js; settings
    from config.js.
    ========================================================================== */
@@ -117,7 +117,7 @@
       '<div class="footer__top">' +
       '<div class="footer__brand"><img src="' + root + 'assets/img/mark-white.png" alt="TAO" width="69" height="28" loading="lazy">' +
       '<p class="tag">Thrive in Life &amp; Career</p>' +
-      "<p>Practical development in communication, leadership and negotiation — for professionals, teams and organisations.</p>" +
+      "<p>Practical development in communication, leadership and negotiation for professionals, teams and organisations.</p>" +
       '<a class="btn btn--ghost btn--sm" href="' + root + 'newsletter.html#subscribe">Join the Newsletter</a>' + socialHtml() + "</div>" +
       '<div><h4>Explore</h4><ul>' +
       '<li><a href="' + root + 'about.html">About TAO</a></li>' +
@@ -130,7 +130,7 @@
       '<div><h4>Facilitators</h4><ul>' + facLinks + '</ul><h4 style="margin-top:32px">Contact</h4><ul>' + contactItems + "</ul></div>" +
       "</div>" +
       '<p class="footer__principle">Insight is useful only when it becomes behaviour.</p>' +
-      '<div class="footer__bottom"><span>© ' + new Date().getFullYear() + " TAO — Thrive in Life &amp; Career</span>" +
+      '<div class="footer__bottom"><span>© ' + new Date().getFullYear() + " TAO: Thrive in Life &amp; Career</span>" +
       '<nav aria-label="Legal"><a href="' + root + 'privacy.html">Privacy Policy</a><a href="' + root + 'terms.html">Terms of Use</a><a href="#top">Back to top ↑</a></nav></div>' +
       "</div></footer>";
   }
@@ -283,7 +283,7 @@
   R["facilitator-cards"] = function (el) {
     el.innerHTML = (C.facilitators || []).map(function (f, i) {
       return '<article class="fac reveal" style="--d:' + i * 0.1 + 's">' +
-        '<a class="fac__photo" href="' + root + "facilitators.html#" + f.id + '" aria-label="' + esc(f.name) + ' — full profile">' + photo(f.photo, "(max-width: 860px) 100vw, 45vw", { alt: f.name }) +
+        '<a class="fac__photo" href="' + root + "facilitators.html#" + f.id + '" aria-label="' + esc(f.name) + ': full profile">' + photo(f.photo, "(max-width: 860px) 100vw, 45vw", { alt: f.name }) +
         '<span class="fac__discipline">' + esc(f.discipline) + "</span></a>" +
         "<div><h3>" + esc(f.name) + '</h3><p class="fac__role">' + esc(f.role) + "</p></div>" +
         '<ul class="fac__focus" aria-label="Focus areas">' + f.focus.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>" +
@@ -306,7 +306,7 @@
         '<p class="profile__lead reveal">' + esc(f.lead) + "</p>" +
         '<div class="prose reveal">' + f.profile.map(function (p) { return "<p>" + esc(p) + "</p>"; }).join("") + "</div>" +
         '<div class="profile__block reveal"><h3>Qualifications &amp; standing</h3><ul class="cred-list">' +
-        f.credentials.map(function (c) { return "<li><span>" + esc(c.text) + (c.note ? ' <span class="note">— ' + esc(c.note) + "</span>" : "") + "</span></li>"; }).join("") + "</ul></div>" +
+        f.credentials.map(function (c) { return "<li><span>" + esc(c.text) + (c.note ? ' <span class="note">(' + esc(c.note) + ")</span>" : "") + "</span></li>"; }).join("") + "</ul></div>" +
         ((f.experience || []).length ? '<div class="profile__block reveal"><h3>Experience</h3><ul class="cred-list">' + f.experience.map(function (x) { return "<li><span>" + esc(x) + "</span></li>"; }).join("") + "</ul></div>" : "") +
         (progs.length ? '<div class="profile__block reveal"><h3>Programmes led</h3><div class="leads">' + progs.map(function (p) { return '<a href="' + progHref(p) + '">' + esc(p.title) + "</a>"; }).join("") + "</div></div>" : "") +
         '<div class="btn-row reveal" style="margin-top:40px"><a class="btn btn--ink" href="' + enquireHref("Working with " + f.name, "speaking") + '">Enquire about working with ' + esc(f.name.split(" ")[0]) + " " + ARROW + "</a></div>" +
@@ -347,9 +347,9 @@
       sec("Articles", items(articles, function (a) { return '<a href="' + root + "insights/" + a.slug + '.html"><b>' + esc(a.title) + "</b><span>" + esc(a.summary) + "</span></a>"; })) +
       sec("Workshop updates", items(is.workshops, function (w) { return "<div><b>" + esc(w.title) + "</b><span>" + esc(w.text) + "</span>" + (w.href ? '<a class="link-arrow" style="justify-self:start;margin-top:8px" href="' + root + esc(w.href) + '">' + esc(w.label || "Read more") + " " + ARROW + "</a>" : "") + "</div>"; })) +
       sec("TAO news", items(is.news, function (n) { return "<div><b>" + esc(n.title) + "</b><span>" + esc(n.text) + "</span></div>"; })) +
-      sec("Facilitator notes", items(is.facilitatorNotes, function (n) { return "<div><b>" + esc(n.title) + "</b><span>" + esc(n.text) + "</span>" + (n.by ? "<span>— " + esc(facName(n.by) || n.by) + "</span>" : "") + "</div>"; })) +
+      sec("Facilitator notes", items(is.facilitatorNotes, function (n) { return "<div><b>" + esc(n.title) + "</b><span>" + esc(n.text) + "</span>" + (n.by ? "<span>" + esc(facName(n.by) || n.by) + "</span>" : "") + "</div>"; })) +
       sec("Programmes in focus", items(upcoming, function (p) { return '<a href="' + progHref(p) + '"><b>' + esc(p.title) + "</b><span>" + esc(p.summary) + "</span></a>"; }));
-    if (params.get("issue")) document.title = "Issue " + is.number + ": " + is.title + " — TAO Newsletter";
+    if (params.get("issue")) document.title = "Issue " + is.number + ": " + is.title + " | TAO Newsletter";
   };
   R["newsletter-archive"] = function (el) {
     var cur = currentIssue();
@@ -440,13 +440,13 @@
       btn.disabled = true;
       fetch(cfg.formEndpoint, { method: "POST", body: data, headers: { Accept: "application/json" } })
         .then(function (r) { if (!r.ok) throw new Error("status " + r.status); form.reset(); show(onDone); })
-        .catch(function () { show("Sorry — your message could not be sent. Please try again in a moment" + (cfg.email ? ", or email " + cfg.email : "") + ".", true); })
+        .catch(function () { show("Sorry, your message could not be sent. Please try again in a moment" + (cfg.email ? ", or email " + cfg.email : "") + ".", true); })
         .then(function () { btn.disabled = false; });
     } else if (cfg.email) {
       window.location.href = "mailto:" + cfg.email + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(summary(data));
       show("Your email app should now open with your message ready to send.");
     } else {
-      show("Thank you. Online submissions are being connected — please try again shortly.", true);
+      show("Thank you. Online submissions are being connected. Please try again shortly.", true);
     }
   }
 
@@ -464,10 +464,10 @@
     enquiry.addEventListener("submit", function (e) {
       e.preventDefault();
       var d = new FormData(enquiry);
-      submitForm(enquiry, "TAO enquiry — " + (d.get("topic") || d.get("enquiry_type") || "General") + " — " + d.get("name"), function (data) {
+      submitForm(enquiry, "TAO enquiry: " + (d.get("topic") || d.get("enquiry_type") || "General") + ", " + d.get("name"), function (data) {
         return ["Enquiry type: " + (data.get("enquiry_type") || "-"), "Name: " + data.get("name"), "Email: " + data.get("email"),
           "Organisation: " + (data.get("organisation") || "-"), "Role: " + (data.get("role") || "-"), "Interested in: " + (data.get("topic") || "-"), "", data.get("message")].join("\n");
-      }, "Thank you — your enquiry has been sent. We will reply personally.");
+      }, "Thank you, your enquiry has been sent. We will reply personally.");
     });
   }
   $all(".subscribe-form").forEach(function (f) {
@@ -475,7 +475,7 @@
       e.preventDefault();
       submitForm(f, "TAO Newsletter subscription", function (data) {
         return "Please add me to the TAO Newsletter.\n\nName: " + (data.get("name") || "-") + "\nEmail: " + data.get("email");
-      }, "Thank you — you are on the list for the next TAO Newsletter.");
+      }, "Thank you, you are on the list for the next TAO Newsletter.");
     });
   });
 

@@ -1,8 +1,8 @@
-# TAO — Thrive in Life & Career
+# TAO: Thrive in Life & Career
 
 The website of **TAO**, a professional development institution for communication, leadership, negotiation and influence.
 
-Plain HTML, CSS and JavaScript. No framework, no build step — it deploys to GitHub Pages as it is.
+Plain HTML, CSS and JavaScript. No framework, no build step. It deploys to GitHub Pages as it is.
 
 Live address: <https://didulaweerasekara.github.io/TAO/>
 
@@ -56,7 +56,7 @@ GitHub Pages cannot receive form submissions itself. Enquiries and newsletter si
 1. Create a free form at [formspree.io](https://formspree.io) and copy its endpoint (e.g. `https://formspree.io/f/abcdwxyz`).
 2. Paste it into `formEndpoint`.
 
-If `formEndpoint` is empty but `email` is set, forms open the visitor's email app instead. **Until one of the two is set, forms cannot deliver messages** — set this before sharing the site widely.
+If `formEndpoint` is empty but `email` is set, forms open the visitor's email app instead. **Until one of the two is set, forms cannot deliver messages**. Set this before sharing the site widely.
 
 ## Publishing
 
