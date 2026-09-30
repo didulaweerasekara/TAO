@@ -331,6 +331,7 @@
     var fac = last ? facNames(last.facilitators) : [];
     el.innerHTML = '<div class="ws' + (last ? "" : " ws--single") + '">' +
       '<div class="ws-next theme-dark reveal">' +
+      '<svg class="converge ws-next__lines" viewBox="0 0 600 400" preserveAspectRatio="xMaxYMax meet" aria-hidden="true"><path d="M0 30 C 200 30 250 200 380 200"/><path d="M0 370 C 200 370 250 200 380 200"/><path d="M380 200 H 600"/><circle class="c-dot" cx="380" cy="200" r="3.5"/></svg>' +
       '<span class="event__status event__status--upcoming">Upcoming workshops</span>' +
       "<h3>The next public dates are being finalised.</h3>" +
       "<p>Register your interest and you will hear as soon as places open. Any workshop can also be run privately for your team.</p>" +
@@ -347,15 +348,16 @@
 
   R["facilitator-cards"] = function (el) {
     el.innerHTML = (C.facilitators || []).map(function (f, i) {
-      return '<article class="fac reveal" style="--d:' + i * 0.1 + 's">' +
-        '<a class="fac__photo" href="' + root + "facilitators.html#" + f.id + '" tabindex="-1" aria-hidden="true">' + photo(f.photo, "(max-width: 620px) 40vw, 240px", { alt: "" }) + "</a>" +
-        '<div class="fac__body">' +
-        '<p class="fac__discipline">' + esc(f.discipline) + "</p>" +
-        "<h3>" + esc(f.name) + '</h3><p class="fac__role">' + esc(f.role) + "</p>" +
-        '<p class="fac__summary">' + esc(f.summary) + "</p>" +
-        ((f.highlights || []).length ? '<ul class="fac__highlights" aria-label="Highlights">' + f.highlights.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>" : "") +
+      return '<article class="fx reveal" style="--d:' + i * 0.1 + 's">' +
+        '<div class="fx__visual">' +
+        '<a class="fx__photo" href="' + root + "facilitators.html#" + f.id + '" tabindex="-1" aria-hidden="true">' + photo(f.photo, "(max-width: 860px) 100vw, 45vw", { alt: "" }) + "</a>" +
+        '<div class="fx__caption"><p class="fx__discipline">' + esc(f.discipline) + "</p><h3>" + esc(f.name) + "</h3></div></div>" +
+        '<div class="fx__body">' +
+        '<p class="fx__role">' + esc(f.role) + "</p>" +
+        '<p class="fx__summary">' + esc(f.summary) + "</p>" +
+        ((f.highlights || []).length ? '<ul class="fx__highlights" aria-label="Highlights">' + f.highlights.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>" : "") +
         '<a class="link-arrow" href="' + root + "facilitators.html#" + f.id + '">Read ' + esc(f.name.split(" ")[0]) + "’s profile " + ARROW + "</a></div></article>";
-    }).join("");
+    }).join('<span class="duo-x__amp" aria-hidden="true">&amp;</span>');
   };
 
   R["facilitator-profiles"] = function (el) {
@@ -471,6 +473,12 @@
     if (fn) fn(el);
   });
 
+  /* Live counts, e.g. <b data-count="programmes"> shows how many programmes exist */
+  $all("[data-count]").forEach(function (el) {
+    var list = C[el.getAttribute("data-count")];
+    if (list && list.length) el.textContent = list.length;
+  });
+
   /* Anchors to rendered content (e.g. programmes.html#individual) do not exist
      when the browser first looks for them, so scroll once rendering is done.
      Programme and profile renderers handle their own hashes. */
@@ -548,7 +556,7 @@
   });
 
   /* ---------- Motion: reveal on scroll ---------- */
-  var watch = $all(".reveal, .reveal-img, .converge.draw, .method__track");
+  var watch = $all(".reveal, .reveal-img, .converge.draw, .method-map");
   var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if ("IntersectionObserver" in window && !reduced) {
     var io = new IntersectionObserver(function (entries) {
