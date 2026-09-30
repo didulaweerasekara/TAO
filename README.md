@@ -62,7 +62,11 @@ If `formEndpoint` is empty but `email` is set, forms open the visitor's email ap
 
 The site is served by GitHub Pages from the `main` branch root. Push to `main` and it updates within a minute or two.
 
-If you move to a custom domain, update `siteUrl` in `config.js`, the `canonical`/`og:` URLs in each page's `<head>`, and the `/TAO/` paths in `404.html`.
+If you move to a custom domain, update `siteUrl` in `config.js`, the `canonical`/`og:` URLs in each page's `<head>`, the JSON-LD URLs in `index.html` and `facilitators.html`, `sitemap.xml`, and the `/TAO/` paths in `404.html`.
+
+## Search engines
+
+`sitemap.xml` lists every page Google should index. When you add a page (for example a new insight), add its URL there too and update `lastmod`. Submit the sitemap once in [Google Search Console](https://search.google.com/search-console) under *Sitemaps*. Redirect pages and `404.html` are `noindex` and are deliberately left out.
 
 ## Previewing locally
 
