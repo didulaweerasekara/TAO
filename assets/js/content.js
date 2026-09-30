@@ -10,7 +10,8 @@
    • Replace a photograph → put new files in assets/img/photos/ and update
      the entry in `photos` (keep the same key and every page updates).
    • Add a programme      → copy one object in `programmes`, give it a new
-     unique `id`. Set `featured: true` to show it on the home page.
+     unique `id`. It appears in the home page programme tabs automatically;
+     `featured: true` lists it first there.
    • Add an event         → copy the example in `events`, set status
      "upcoming". Past events move to the "Recent workshops" list when their
      status is "past".
@@ -56,6 +57,8 @@ window.TAO_CONTENT = {
       photo: "didulaPortrait",
       secondPhoto: "didulaPresenting",
       focus: ["Communication", "Leadership", "Presence", "Influence", "Professional Communication"],
+      // Short credibility points for the home page, drawn from `credentials` and `experience` below
+      highlights: ["9+ years of teaching and training", "BA in English Language Teaching", "Diploma in Counselling Psychology", "Higher Diploma in Psychotherapy"],
       summary: "Helps professionals turn what they know into how they speak, present and lead, drawing on more than nine years of teaching and training, and a grounding in education and counselling psychology.",
       lead: "Didula works at the point where knowing something becomes saying it well: helping people communicate with clarity, lead with intention and carry themselves with confidence in professional settings.",
       profile: [
@@ -88,6 +91,7 @@ window.TAO_CONTENT = {
       photo: "harshadewaPortrait",
       secondPhoto: "reflectWall",
       focus: ["Negotiation", "Mediation", "Conflict", "Access Negotiation", "High-Stakes Communication"],
+      highlights: ["Certified Mediator", "UN / humanitarian access negotiation", "Rotary Peace Fellow", "Three master's degrees"],
       summary: "Brings the discipline of international and humanitarian access negotiation to professional life: preparation, mediation and conversations where the stakes are real.",
       lead: "Harshadewa brings the discipline of high-stakes negotiation into professional life, from humanitarian access negotiation to mediation, conflict and the difficult conversations every organisation eventually faces.",
       profile: [
@@ -285,12 +289,16 @@ window.TAO_CONTENT = {
      date:   ISO date "YYYY-MM-DD" when confirmed (used for sorting). Leave ""
              if unknown: `dateLabel` is then shown instead (or omitted).
      cta:    { label, href }: registration link or enquiry link.
+     duration / investment: optional; shown only when filled in.
+
+     The next upcoming event is featured on the home page automatically.
 
      Example of an upcoming event (copy, uncomment and edit):
      {
        id: "negotiation-2026-11", status: "upcoming",
        title: "Negotiation Workshop", subtitle: "Better conversations. Stronger outcomes.",
        date: "2026-11-15", dateLabel: "15 November 2026", time: "9:00 to 16:00",
+       duration: "One day", investment: "Fee and what it includes",
        venue: "Venue name, City", facilitators: ["harshadewa-amaratunga", "didula-weerasekara"],
        description: "…", experience: ["…", "…"], photo: "practiceTable",
        cta: { label: "Register", href: "contact.html?type=workshop&topic=Negotiation%20Workshop#enquiry" }
