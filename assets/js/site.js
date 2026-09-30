@@ -297,8 +297,8 @@
       var progs = (C.programmes || []).filter(function (p) { return (p.facilitators || [])[0] === f.id; });
       return '<article class="profile' + (i % 2 ? " profile--flip" : "") + '" id="' + f.id + '" aria-labelledby="n-' + f.id + '">' +
         '<div class="profile__media reveal">' +
-        '<div class="fac__photo">' + photo(f.photo, "(max-width: 1080px) 50vw, 40vw", { alt: f.name, eager: i === 0 }) + '<span class="fac__discipline">' + esc(f.discipline) + "</span></div>" +
-        (f.secondPhoto ? '<div class="profile__second">' + photo(f.secondPhoto, "(max-width: 1080px) 50vw, 40vw") + "</div>" : "") +
+        '<div class="fac__photo">' + photo(f.photo, "(max-width: 620px) 100vw, (max-width: 1080px) 50vw, 420px", { alt: f.name, eager: i === 0 }) + '<span class="fac__discipline">' + esc(f.discipline) + "</span></div>" +
+        (f.secondPhoto ? '<div class="profile__second">' + photo(f.secondPhoto, "(max-width: 620px) 100vw, (max-width: 1080px) 50vw, 420px") + "</div>" : "") +
         "</div>" +
         '<div class="profile__content">' +
         '<div class="profile__head reveal"><h2 id="n-' + f.id + '">' + esc(f.name) + '</h2><p class="profile__role">' + esc(f.role) + "</p>" +
