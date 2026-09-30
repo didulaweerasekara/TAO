@@ -36,8 +36,8 @@ Live address: <https://didulaweerasekara.github.io/TAO/>
 
 `content.js` has instructions at the top. The short version:
 
-- **Add a programme:** copy an object in `programmes`, give it a unique `id`. It appears in the catalogue, the contact form dropdown and on facilitator profiles automatically. `featured: true` puts it on the home page.
-- **Add an event:** copy the commented example in `events` and set `status: "upcoming"`. When it has happened, change it to `"past"`, and it moves to *Recent workshops*.
+- **Add a programme:** copy an object in `programmes`, give it a unique `id`. It appears in the catalogue, the contact form dropdown and on facilitator profiles automatically. It also appears in the home page programme tabs; `featured: true` lists it first there.
+- **Add an event:** copy the commented example in `events` and set `status: "upcoming"`. The next upcoming event is featured on the home page automatically. When it has happened, change it to `"past"`, and it moves to *Recent workshops*.
 - **Add a newsletter issue:** add a new object at the **top** of `newsletter`. The first issue is the current issue; older ones stay in the archive. Empty sections are hidden.
 - **Add an insight:** copy an article in `insights/`, rename it, edit it, then add a matching entry at the top of `insights` in `content.js`.
 - **Add a testimonial:** add `{ quote, name, role, programme }` to `testimonials`. The section is hidden until at least one exists. Publish only verified feedback, with permission.

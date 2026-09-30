@@ -43,15 +43,15 @@
 
   /* ---------- Header ---------- */
   var NAV = [
-    ["about", "about.html", "About"],
     ["programmes", "programmes.html", "Programmes"],
-    ["events", "events.html", "Events"],
-    ["facilitators", "facilitators.html", "Facilitators"],
+    ["events", "events.html", "Workshops"],
     ["organisations", "organisations.html", "For Organisations"],
+    ["facilitators", "facilitators.html", "Facilitators"],
     ["insights", "insights.html", "Insights"],
-    ["newsletter", "newsletter.html", "Newsletter"],
+    ["about", "about.html", "About"],
     ["contact", "contact.html", "Contact"]
   ];
+  var NAV_BREAKPOINT = 1100; /* keep in step with the header media query in styles.css */
 
   var header = document.getElementById("site-header");
   if (header) {
@@ -79,7 +79,7 @@
       if (e.key === "Escape" && nav.classList.contains("is-open")) { setNav(false); toggle.focus(); }
     });
     nav.addEventListener("click", function (e) { if (e.target.closest("a")) setNav(false); });
-    window.addEventListener("resize", function () { if (window.innerWidth > 1180) setNav(false); });
+    window.addEventListener("resize", function () { if (window.innerWidth > NAV_BREAKPOINT) setNav(false); });
   }
 
   /* ---------- Footer ---------- */
@@ -122,7 +122,7 @@
       '<div><h4>Explore</h4><ul>' +
       '<li><a href="' + root + 'about.html">About TAO</a></li>' +
       '<li><a href="' + root + 'programmes.html">Programmes</a></li>' +
-      '<li><a href="' + root + 'events.html">Events</a></li>' +
+      '<li><a href="' + root + 'events.html">Workshops</a></li>' +
       '<li><a href="' + root + 'organisations.html">For Organisations</a></li>' +
       '<li><a href="' + root + 'insights.html">Insights</a></li>' +
       '<li><a href="' + root + 'newsletter.html">Newsletter</a></li></ul></div>' +
@@ -138,24 +138,66 @@
   /* ---------- Renderers ---------- */
   var R = {};
 
-  R.areas = function (el) {
-    el.innerHTML = (C.areas || []).map(function (a, i) {
-      return '<a class="area reveal" style="--d:' + (i % 2) * 0.06 + 's" href="' + root + "programmes.html?area=" + a.id + '#catalogue">' +
-        '<span class="area__num">' + String(i + 1).padStart(2, "0") + "</span><h3>" + esc(a.title) + "</h3>" + ARROW +
-        "<p>" + esc(a.summary) + "</p></a>";
-    }).join("");
-  };
-
-  function progCard(p, i) {
-    var area = byId(C.areas, p.area);
-    return '<a class="prog-card reveal" style="--d:' + (i % 3) * 0.08 + 's" href="' + progHref(p) + '">' +
+  function progCard(p) {
+    return '<a class="prog-card" href="' + progHref(p) + '">' +
       '<div class="prog-card__meta"><span>' + (p.audience === "organisation" ? "For organisations" : "For individuals") + "</span></div>" +
       "<h3>" + esc(p.title) + "</h3><p>" + esc(p.summary) + "</p>" +
-      '<div class="prog-card__foot"><span>' + esc(area ? area.title : "") + "</span>" + ARROW + "</div></a>";
+      (p.format ? '<p class="prog-card__format"><span>Format</span>' + esc(p.format) + "</p>" : "") +
+      '<div class="prog-card__foot"><span>View programme</span>' + ARROW + "</div></a>";
   }
-  R["featured-programmes"] = function (el) {
-    var limit = +el.getAttribute("data-limit") || 3;
-    el.innerHTML = (C.programmes || []).filter(function (p) { return p.featured; }).slice(0, limit).map(progCard).join("");
+
+  /* Home page: programmes grouped into tabs. A programme can sit in more than one. */
+  var PROGRAMME_TABS = [
+    { id: "individual", label: "Individual development", href: "programmes.html#individual",
+      test: function (p) { return p.audience === "individual"; } },
+    { id: "lead-comm", label: "Leadership & communication", href: "programmes.html?area=leadership#catalogue",
+      test: function (p) { return ["communication", "leadership", "ei", "cultures"].indexOf(p.area) > -1; } },
+    { id: "neg-inf", label: "Negotiation & influence", href: "programmes.html?area=negotiation#catalogue",
+      test: function (p) { return p.area === "negotiation" || p.id === "influence"; } },
+    { id: "organisation", label: "Organisational development", href: "programmes.html#organisation",
+      test: function (p) { return p.audience === "organisation"; } }
+  ];
+  R["programme-tabs"] = function (el) {
+    var LIMIT = 6;
+    var tabs = PROGRAMME_TABS.map(function (t) {
+      var list = (C.programmes || []).filter(t.test);
+      /* featured programmes first, then catalogue order */
+      list.sort(function (a, b) { return (b.featured ? 1 : 0) - (a.featured ? 1 : 0); });
+      return { tab: t, list: list };
+    }).filter(function (x) { return x.list.length; });
+    if (!tabs.length) return;
+
+    el.innerHTML =
+      '<div class="tabs" role="tablist" aria-label="Programme categories">' + tabs.map(function (x, i) {
+        return '<button class="chip" type="button" role="tab" id="tab-' + x.tab.id + '" aria-controls="panel-' + x.tab.id + '" aria-selected="' + (i === 0) + '"' + (i ? ' tabindex="-1"' : "") + ">" + esc(x.tab.label) + "</button>";
+      }).join("") + "</div>" +
+      tabs.map(function (x, i) {
+        var more = x.list.length > LIMIT ? x.list.length - LIMIT : 0;
+        return '<div class="tab-panel" role="tabpanel" id="panel-' + x.tab.id + '" aria-labelledby="tab-' + x.tab.id + '"' + (i ? " hidden" : "") + ">" +
+          '<div class="prog-grid rail">' + x.list.slice(0, LIMIT).map(progCard).join("") + "</div>" +
+          '<p class="tab-panel__more"><a class="link-arrow" href="' + root + x.tab.href + '">' +
+          (more ? "See " + more + " more in " + esc(x.tab.label.toLowerCase()) : "See these in the full catalogue") + " " + ARROW + "</a></p></div>";
+      }).join("");
+
+    var buttons = $all('[role="tab"]', el);
+    var select = function (btn, focus) {
+      buttons.forEach(function (b) {
+        var on = b === btn;
+        b.setAttribute("aria-selected", String(on));
+        b.tabIndex = on ? 0 : -1;
+        document.getElementById(b.getAttribute("aria-controls")).hidden = !on;
+      });
+      if (focus) btn.focus();
+    };
+    buttons.forEach(function (b, i) {
+      b.addEventListener("click", function () { select(b); });
+      b.addEventListener("keydown", function (e) {
+        var n = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+        if (e.key === "Home") { e.preventDefault(); select(buttons[0], true); }
+        else if (e.key === "End") { e.preventDefault(); select(buttons[buttons.length - 1], true); }
+        else if (n) { e.preventDefault(); select(buttons[(i + n + buttons.length) % buttons.length], true); }
+      });
+    });
   };
   R["programmes-by-facilitator"] = function (el) {
     var id = el.getAttribute("data-facilitator");
@@ -239,8 +281,10 @@
       '<div class="event__title"><h3>' + esc(ev.title) + "</h3>" + (ev.subtitle ? "<p>" + esc(ev.subtitle) + "</p>" : "") + "</div>" +
       '<dl class="event__facts">' +
       "<div><dt>Date</dt><dd>" + esc(when) + (ev.time ? "<br>" + esc(ev.time) : "") + "</dd></div>" +
-      (ev.venue ? "<div><dt>Venue</dt><dd>" + esc(ev.venue) + "</dd></div>" : "") +
+      (ev.venue ? "<div><dt>Location</dt><dd>" + esc(ev.venue) + "</dd></div>" : "") +
+      (ev.duration ? "<div><dt>Duration</dt><dd>" + esc(ev.duration) + "</dd></div>" : "") +
       (fac.length ? "<div><dt>Facilitators</dt><dd>" + fac.map(esc).join("<br>") + "</dd></div>" : "") +
+      (ev.investment ? "<div><dt>Investment</dt><dd>" + esc(ev.investment) + "</dd></div>" : "") +
       "</dl>" +
       (ev.programmeLabel ? '<p class="event__desc"><strong>' + esc(ev.programmeLabel) + "</strong></p>" : "") +
       '<p class="event__desc">' + esc(ev.description) + "</p>" +
@@ -273,22 +317,44 @@
       return "<div>" + eventCard(ev) + gal + "</div>";
     }).join("") + "</div>";
   };
-  R["events-home"] = function (el) {
+  /* Home page: the next workshop in full, or (until dates are confirmed) a
+     register-interest panel beside the most recent workshop. */
+  R["workshops-home"] = function (el) {
     var up = sortedEvents("upcoming");
-    if (up.length) { el.innerHTML = eventCard(up[0]); return; }
-    var past = sortedEvents("past");
-    el.innerHTML = (past.length ? eventCard(past[0]) : "") + '<div style="margin-top:20px">' + EMPTY_UPCOMING() + "</div>";
+    if (up.length) {
+      el.innerHTML = eventCard(up[0]) + (up.length > 1 ? '<ul class="ws-more reveal">' + up.slice(1, 4).map(function (ev) {
+        return '<li><a href="' + root + 'events.html#upcoming"><b>' + esc(ev.title) + "</b><span>" + esc(ev.dateLabel || "Date to be confirmed") + (ev.venue ? " · " + esc(ev.venue) : "") + "</span>" + ARROW + "</a></li>";
+      }).join("") + "</ul>" : "");
+      return;
+    }
+    var last = sortedEvents("past")[0];
+    var fac = last ? facNames(last.facilitators) : [];
+    el.innerHTML = '<div class="ws' + (last ? "" : " ws--single") + '">' +
+      '<div class="ws-next theme-dark reveal">' +
+      '<span class="event__status event__status--upcoming">Upcoming workshops</span>' +
+      "<h3>The next public dates are being finalised.</h3>" +
+      "<p>Register your interest and you will hear as soon as places open. Any workshop can also be run privately for your team.</p>" +
+      '<div class="btn-row"><a class="btn btn--primary" href="' + root + 'contact.html?type=workshop&amp;topic=Upcoming%20workshops#enquiry">Register interest ' + ARROW + "</a>" +
+      '<a class="btn btn--ghost" href="' + root + 'organisations.html">Run one for your team</a></div></div>' +
+      (last ? '<a class="ws-recent reveal" style="--d:.08s" href="' + root + 'events.html#recent">' +
+        '<div class="ws-recent__media">' + photo(last.photo, "(max-width: 860px) 100vw, 40vw") + '<span class="event__status">Recent workshop</span></div>' +
+        '<div class="ws-recent__body"><h3>' + esc(last.title) + "</h3>" + (last.subtitle ? '<p class="ws-recent__sub">' + esc(last.subtitle) + "</p>" : "") +
+        (fac.length ? '<p class="ws-recent__fac">With ' + fac.map(esc).join(" and ") + "</p>" : "") +
+        ((last.experience || []).length ? '<ul class="outcomes">' + last.experience.slice(0, 3).map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>" : "") +
+        '<span class="link-arrow">See what happened ' + ARROW + "</span></div></a>" : "") +
+      "</div>";
   };
 
   R["facilitator-cards"] = function (el) {
     el.innerHTML = (C.facilitators || []).map(function (f, i) {
       return '<article class="fac reveal" style="--d:' + i * 0.1 + 's">' +
-        '<a class="fac__photo" href="' + root + "facilitators.html#" + f.id + '" aria-label="' + esc(f.name) + ': full profile">' + photo(f.photo, "(max-width: 860px) 100vw, 45vw", { alt: f.name }) +
-        '<span class="fac__discipline">' + esc(f.discipline) + "</span></a>" +
-        "<div><h3>" + esc(f.name) + '</h3><p class="fac__role">' + esc(f.role) + "</p></div>" +
-        '<ul class="fac__focus" aria-label="Focus areas">' + f.focus.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>" +
+        '<a class="fac__photo" href="' + root + "facilitators.html#" + f.id + '" tabindex="-1" aria-hidden="true">' + photo(f.photo, "(max-width: 620px) 40vw, 240px", { alt: "" }) + "</a>" +
+        '<div class="fac__body">' +
+        '<p class="fac__discipline">' + esc(f.discipline) + "</p>" +
+        "<h3>" + esc(f.name) + '</h3><p class="fac__role">' + esc(f.role) + "</p>" +
         '<p class="fac__summary">' + esc(f.summary) + "</p>" +
-        '<a class="link-arrow" href="' + root + "facilitators.html#" + f.id + '">Read ' + esc(f.name.split(" ")[0]) + "’s profile " + ARROW + "</a></article>";
+        ((f.highlights || []).length ? '<ul class="fac__highlights" aria-label="Highlights">' + f.highlights.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>" : "") +
+        '<a class="link-arrow" href="' + root + "facilitators.html#" + f.id + '">Read ' + esc(f.name.split(" ")[0]) + "’s profile " + ARROW + "</a></div></article>";
     }).join("");
   };
 
@@ -322,15 +388,6 @@
     var list = C.newsletter || [];
     return byId(list, params.get("issue")) || list[0];
   }
-  R["newsletter-latest"] = function (el) {
-    var is = (C.newsletter || [])[0];
-    if (!is) { var s = el.closest("[data-section]"); if (s) s.hidden = true; return; }
-    el.innerHTML = '<a class="nl-card reveal" href="' + root + "newsletter.html?issue=" + is.id + '#issue">' +
-      '<div class="nl-card__cover">' + photo(is.cover, "(max-width: 860px) 100vw, 45vw", { alt: "" }) +
-      '<div class="nl-card__mast"><span>TAO Newsletter</span><span>Issue ' + esc(is.number) + "</span></div></div>" +
-      '<div class="nl-card__body"><span class="eyebrow">' + esc(is.month) + "</span><h3>" + esc(is.title) + "</h3><p>" + esc(is.intro) + "</p>" +
-      '<span class="link-arrow">Read the latest issue ' + ARROW + "</span></div></a>";
-  };
   R["newsletter-issue"] = function (el) {
     var is = currentIssue();
     if (!is) { el.innerHTML = '<p class="muted">The first issue is on its way. Subscribe below to receive it.</p>'; return; }
@@ -359,17 +416,18 @@
     }).join("");
   };
 
-  function postCard(a, i) {
-    return '<a class="post-card reveal" style="--d:' + (i % 3) * 0.08 + 's" href="' + root + "insights/" + a.slug + '.html" data-category="' + esc(a.category) + '">' +
-      '<div class="media">' + photo(a.photo, "(max-width: 620px) 100vw, (max-width: 1080px) 50vw, 33vw", { alt: "" }) + "</div>" +
+  function postCard(a, i, compact) {
+    return '<a class="post-card' + (compact ? " post-card--compact" : "") + ' reveal" style="--d:' + (i % 3) * 0.08 + 's" href="' + root + "insights/" + a.slug + '.html" data-category="' + esc(a.category) + '">' +
+      (compact ? "" : '<div class="media">' + photo(a.photo, "(max-width: 620px) 100vw, (max-width: 1080px) 50vw, 33vw", { alt: "" }) + "</div>") +
       '<div class="post-meta"><span class="cat">' + esc(a.category) + "</span><span>" + esc(a.readTime) + "</span></div>" +
       "<h3>" + esc(a.title) + "</h3><p>" + esc(a.summary) + "</p></a>";
   }
   R.insights = function (el) {
     var limit = +el.getAttribute("data-limit") || 99;
     var exclude = el.getAttribute("data-exclude");
+    var compact = el.hasAttribute("data-compact");
     var list = (C.insights || []).filter(function (a) { return a.slug !== exclude; }).slice(0, limit);
-    var grid = '<div class="post-grid">' + list.map(postCard).join("") + "</div>";
+    var grid = '<div class="post-grid' + (compact ? " rail" : "") + '">' + list.map(function (a, i) { return postCard(a, i, compact); }).join("") + "</div>";
     if (el.hasAttribute("data-filters")) {
       var cats = [];
       (C.insights || []).forEach(function (a) { if (cats.indexOf(a.category) < 0) cats.push(a.category); });
@@ -412,6 +470,16 @@
     var fn = R[el.getAttribute("data-render")];
     if (fn) fn(el);
   });
+
+  /* Anchors to rendered content (e.g. programmes.html#individual) do not exist
+     when the browser first looks for them, so scroll once rendering is done.
+     Programme and profile renderers handle their own hashes. */
+  if (location.hash && !/^#(top|main)$/.test(location.hash)) {
+    var target = document.getElementById(location.hash.slice(1));
+    if (target && !target.closest(".programme, .profile")) {
+      setTimeout(function () { target.scrollIntoView({ block: "start" }); }, 30);
+    }
+  }
 
   /* ---------- Contact details anywhere on a page ---------- */
   $all("[data-contact]").forEach(function (el) {
